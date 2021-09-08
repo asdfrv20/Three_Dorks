@@ -22,8 +22,6 @@ for i in range(T):
 for room_number in RN_list: 
     print(room_number)
 
-
-
 # 2nd try: 
 '''
 import sys 
