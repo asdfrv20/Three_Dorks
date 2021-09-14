@@ -10,6 +10,7 @@
 '''
 
 # try1
+# 1 10000 기입시 8.1초 소요
 '''
 import time
 
@@ -40,6 +41,7 @@ print('time:', time.time()-start)
 '''
 
 # 2nd try: 
+# 1 10000 입력시 1.8초 소요
 '''
 import time
 
@@ -76,6 +78,7 @@ print('time:', time.time()-start)
 
 # try3 - count 개념을 넣음 >> count:2에서부터 올라가면서 배수인지 아닌지 검사하는 기준
 '''
+
 M, N = map(int, input().split())
 num_list = list(range(M,N+1))
 
@@ -94,6 +97,8 @@ while True:
 # try4 - count & prime 개념 도임 
 # count: num_list[count]=현재 검사하고 있는 소수.(count보다 인덱스 수가 작으면 전부 소수임, del로 전부 삭제했기 때문)
 # prime: 위의 수들을 검사하기 위한 기준 소수는 저장해두는 변수
+
+# 1 10000 입력 시 0.57 초 소요
 '''
 import time
 
@@ -122,6 +127,7 @@ print('time:', time.time()-start)
 '''
 
 # try5: 해당 소수의 "배수를 계산" 후 그 수만 제외시켜, 다른 변수를 검사하는 연산 줄이기 
+# 1 10000 입력 시, 0.73초 소요
 '''
 import time
 
@@ -186,11 +192,13 @@ print('time:', time.time()-start)
     
 
 # try7: try6에서 while문이 아닌 for문을 사용 (check_num)
+# 1 10000 기입시 0.31 소요
+'''
 import time
 
 M, N = map(int, input().split())
 
-# start = time.time()
+start = time.time()
 
 prime_list = [2]
 for check_num in range(3,N+1):
@@ -199,10 +207,68 @@ for check_num in range(3,N+1):
         if check_num%prime == 0: 
             is_prime = False
             break
-    if is_prime:
+    if is_prime: 
         prime_list.append(check_num)
 
-for num in prime_list:
-    print(num)
+for num in prime_list: 
+    if num>=M: print(num)
 
-# print('time:', time.time()-start)
+print('time:', time.time()-start)
+'''
+
+
+# 참고: bro code
+'''
+import sys
+import math
+import time
+
+
+M, N = map(int, input().split())
+
+start=time.time()
+
+Prime_number_list=[2]
+
+if N == 2:
+    pass
+else :
+    for i in range(3,N+1):
+        for j in (Prime_number_list):
+            if i % j ==0:
+                break
+            elif Prime_number_list[-1] == j:
+                Prime_number_list.append(i)
+
+for i in (Prime_number_list):
+    if i >= M:
+        print(i)
+
+print(time.time()-start)
+'''
+
+
+# try8: range의 step을 사용해 보자 
+# url: https://wikidocs.net/21638
+
+import time
+
+M, N = map(int, input().split())
+
+start = time.time()
+
+prime_list = list(range(2,N+1))
+count = -1
+while True:
+    count += 1
+    if count == len(prime_list):
+        break
+
+    for num in range(prime_list[count], N+1, prime_list[count]):
+        if (num%prime_list[count]) and (num!=prime_list[count]):
+            prime_list.remove(num)        
+
+# 결과 출력
+for num in prime_list: 
+    if num>=M: print(num)
+print('time:', time.time()-start)
