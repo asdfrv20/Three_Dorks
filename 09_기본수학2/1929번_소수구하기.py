@@ -250,7 +250,7 @@ print(time.time()-start)
 
 # try8: range의 step을 사용해 보자 
 # url: https://wikidocs.net/21638
-
+'''
 import time
 
 M, N = map(int, input().split())
@@ -272,3 +272,48 @@ while True:
 for num in prime_list: 
     if num>=M: print(num)
 print('time:', time.time()-start)
+'''
+
+
+# try9: 검색한 알고리즘
+# >> Pass!!! 이 알고리즘 반드시 머릿속에 기억하기  
+
+import time
+
+M, N = map(int, input().split())
+
+start = time.time()
+n=N
+a = [False,False] + [True]*(n-1)
+
+for i in range(2,n+1):
+  if a[i]:
+    if M<=i:
+        print(i)
+    for j in range(2*i, n+1, i):
+        a[j] = False
+# print("time1:", time.time()-start)
+# print(len(primes))
+
+# 결과 출력
+# for prime in primes:
+#     if prime>=M:
+#         print(prime)
+# print("time2:", time.time()-start)
+
+print("time:", time.time()-start)
+
+
+
+# 보녕 소수 구하기 조사url - https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=pooong_story&logNo=70152320103
+'''
+m, n = map(int, input().split())
+li = [False] + [True] * ((n - 1) // 2)
+for x in range(1, int(n**.5/2+1)):
+  if li[x]:
+    li[2*x*(x+1)::x*2+1] = [False] * ((((n + 1) // 2) - x * x * 2) // (x * 2 + 1))
+if m <= 2:
+  print(2)
+print('\n'.join([f'{x}' for x, val in zip(range(m+(m&1==0), n+1, 2), li[m//2:]) if val]))
+'''
+
