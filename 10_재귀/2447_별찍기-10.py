@@ -10,7 +10,7 @@ import time
 
 def draw_star(N, i, j):
     if i//(N//3)==1 and j//(N//3)==1:
-        print("1", end="")
+        print(" ", end="")
     else:
         if N!=3:
             draw_star(N/3, i%(N//3), j%(N//3))
@@ -86,7 +86,8 @@ print('time:',time.time()-start)
 
 # try4: 불필요한 재귀 경우 없애기, 97번째 줄 if N==3: return "*"; else: return draw_star() 로 변경
 # 729 입력 시, 1.12초
-
+# 결과는 잘 나오지만 시간 초과;; 
+'''
 import time
 
 def draw_star(N, i, j):
@@ -110,4 +111,33 @@ for i in range(N):
     stars += "\n"
 print(stars[:-1])
 print('time:',time.time()-start)
+'''
+
+
+# try5: 출력을 한줄씩 처리 - print() 호출 횟수를 /N으로 줄임
+
+import time
+
+def draw_star(N, i, j):
+    num = N//3
+    if i//num==1 and j//num==1: 
+        return ' '
+    else:
+        if N!=3: 
+            return draw_star(N/3, i%num, j%num)
+        else: 
+            return '*'
+
+N = int(input())
+start = time.time()
+
+for i in range(N):
+    star_line = ''
+    for j in range(N):
+        star_line += draw_star(N, i, j)
+    print(star_line)
+            
+print('time:',time.time()-start)
+
+
 
