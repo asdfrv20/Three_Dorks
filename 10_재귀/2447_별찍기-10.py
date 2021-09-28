@@ -115,7 +115,7 @@ print('time:',time.time()-start)
 
 
 # try5: 출력을 한줄씩 처리 - print() 호출 횟수를 /N으로 줄임
-
+'''
 import time
 
 def draw_star(N, i, j):
@@ -138,6 +138,108 @@ for i in range(N):
     print(star_line)
             
 print('time:',time.time()-start)
+'''
 
 
+# try6: 재귀 안쓰고 해보자. >> 이건 아닌거 같은데;;
+'''
+N = int(input())
 
+board = ['*'*N for i in range(N)]
+blank = []
+
+n = N
+while True:
+    if n == 1:
+        break
+    n = n//3
+    blank.extend([i for i in range(n, 2*n)])
+print(blank)
+print(board[0][0] + 'board')
+print(len(board[0][0]))
+
+for i in blank:
+    for j in blank:
+        board[i][j].replace("*", "1")
+
+for i in range(N):
+    print(board[i])
+
+'''
+
+
+'''
+import time
+
+def search_blank(N, i):
+    num = N//3
+    if i//num == 1:
+        blank.append(i)
+    else:
+        if N!=3:
+            return search_blank(num, i%num)
+
+N = int(input())
+start = time.time()
+
+blank = []
+for i in range(N):
+    search_blank(N, i)
+
+# 출력
+for i in range(N):
+    if i not in blank:
+        print('*'*N)
+        continue
+    else:
+        for j in range(N):
+            if j not in blank: print('*',end='')
+            else: print(' ', end='')
+        print()
+            
+print('time:',time.time()-start)
+'''
+
+
+'''
+import time
+
+def draw_star(N, i, j):
+    num = N//3
+    if i//num==1 and j//num==1: 
+        return " "
+    else:
+        if N!=3: 
+            return draw_star(N/3, i%num, j%num)
+        else: 
+            return "*"
+
+N = int(input())
+start = time.time()
+count = 0
+
+for i in range(N):
+    stars=''
+    for j in range(N):
+        stars += draw_star(N, i, j)
+    print(stars)
+print('time:',time.time()-start)
+'''
+
+import time
+
+def concatenate(r1, r2):
+    return [''.join(x) for x in zip(r1, r2, r1)]
+ 
+def star10(n):
+    if n == 1:
+        return ['*']
+    n //= 3
+    x = star10(n)
+    a = concatenate(x, x)
+    b = concatenate(x, [' '*n]*n)
+ 
+    return a + b + a
+start = time.time()
+print('\n'.join(star10(int(input()))))
+print('time:', time.time()-start)
