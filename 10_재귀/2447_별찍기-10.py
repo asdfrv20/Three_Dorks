@@ -201,7 +201,9 @@ print('time:',time.time()-start)
 '''
 
 
-'''
+# 내가 짠 코드들 중 그 나마 '틀렸습니다'가 안나오게 바꾼 것.
+# 729 입력시 2.2초
+
 import time
 
 def draw_star(N, i, j):
@@ -224,7 +226,11 @@ for i in range(N):
         stars += draw_star(N, i, j)
     print(stars)
 print('time:',time.time()-start)
-'''
+
+
+
+# 검색으로 찾은 1등 코드
+# 이게 재귀지;;; 
 
 import time
 
@@ -240,6 +246,5 @@ def star10(n):
     b = concatenate(x, [' '*n]*n)
  
     return a + b + a
-start = time.time()
+
 print('\n'.join(star10(int(input()))))
-print('time:', time.time()-start)

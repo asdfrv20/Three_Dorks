@@ -22,7 +22,8 @@
 '''
 
 # try1: 뭔가 복잡... 정보를 찾아보고 다시 해보자
-
+# 'in'을 써보도록 하자.
+'''
 import time
 
 N, M = map(int, input().split())
@@ -31,7 +32,7 @@ start = time.time()
 N_list = list(range(1,N+1))   # N_list: 1~N까지의 자연수를 나타냄
 index_list = list(range(M))   # index_list: 출력되는 각 자리가 가리키는 N_list의 인덱스 번호
 key = M-1                     # key: 현재 변경대상이 되는 index 번호
-end_seq = N_list[N-M:N]      # end_list: 가장 마지막 수열(끝내기 위한 조건으로 걸기)
+end_seq = N_list[N-M:N]       # end_list: 가장 마지막 수열(끝내기 위한 조건으로 걸기)
 end_seq.reverse()
 seqs = []                      # seq: 현재 수열 저장
 
@@ -47,30 +48,27 @@ while True:
     break
   
   # 다음 seq 생성을 위한 index_list 만들기
+  # 각 인덱스별로 0~M까지를 지나다가 M에 도달하면 다시 0으로 돌아가야 한다. 이때, 바로 아래 인덱스의 숫자가 1 증가
   index_list[key] += 1
   while True:
-    if index_list[key] == N:    # <index_list[key]가 N의 범위를 넘어간 경우 예외처리>
-      index_list[key] = 0       # 1) index_list[현재 key]를 0으로 초기화
-      key -= 1                  # 2) 바로 위 우선순위의 index를 key로 지정(key값 1 감소)
-      index_list[key] += 1      # 3) 우선 순위가 하나 높은 index를 1 증가시키기
+    if index_list[key] == N:     # <index_list[key]가 N의 범위를 넘어간 경우 예외처리>
+      key -= 1
+      index_list[key] += 1       # >>index_list[현재 key]를 0으로 초기화 (key값 변화는 중복 발생 시 설정)
       key += 1
-      index_list[key] += 1
-    
-
-    # 최빈값 검사
-    mode = 0
+      index_list[key] = 0
+  
+    # 최빈값 검사 및 중복 검사(※ seq 생성 조건(seq생성 while문 break 조건): 모든 인덱스 숫자에 중복이 없다.)
+    mode = 0                          # 1) 최빈값 검사
     for index in set(index_list):   
       if index_list.count(index) > index_list.count(mode):
         mode = index
         break
-
-    if index_list.count(mode) == 1:    # seq 생성 조건(seq생성 while문 break 조건): 모든 인덱스 숫자에 중복이 없다.
-      break
-    else:                              # <중복이 있을 경우 예외처리>
-      key += 1
-
-    if index_list.count(key) != 1: # 중복되는 index가 존재할 경우, 
-      index_list[key] += 1         # index_list[key]를 1만큼 옮기기
+    # 
+    if index_list.count(mode) != 1:    # 2-1) index_list에 중복이 존재할 때, (존재하지 않을 때까지 반복)
+      # 중복 처리 잘 해주기
+      index_list[key] += 1 
+    else:                              # 2-2) 중복이 존재하지 않을 때, seq 확정
+      break                             
   key = M-1
 
 # 결과 출력
@@ -79,7 +77,76 @@ for seq in seqs:
     print(i, end=' ')
   print()
 print("time:", time.time()-start)
+'''
 
 
 
+# try2: while문 + key개념으로 seq([1]*M 리스트)를 높은 인덱스 원소부터 1~N으로 뺑뺑이 돌리고
+# 핵심개념: 각 인덱스별로 0~M까지를 지나다가 M에 도달하면 다시 0으로 돌아가야 한다. 이때, 바로 아래 인덱스의 숫자가 1 증가
+
+# 하나더? 인덱스별로 N_list에서 하나씩 고르게하면서 그 원소를 set에서 빼는 형태로 계속 진행한 후, 
+'''
+N, M = map(int, input().split())
+
+N_list = [i for i in range(1,N+1)]
+seq = [i for i in range(1,M+1)] 
+
+selects = set(seq[:-1])
+key = M-1
+while True:
+  candidates = set(N_list) - selects
+  for cad in candidates:
+    for select in selects:
+      print(select, end=' ')
+    print(cad)
+
+  candidates
+'''
+
+
+# math.permutations 활용하기 
+'''
+import math
+
+N, M = map(int, input().split())
+
+N_list = [i for i in range(1,N+1)]
+perm = math.permutations(N_list ,M)
+False
+'''
+
+
+# try3: 중복이 발생할 경우, 바로 이전으로 돌리기 
+# 중복 판단 기준: 대상리스트를 set으로 변화시킨 자료를 민들고 만들고, 둘의 len()을 비교했을 때 같지 않으면 중복 
+
+N, M = map(int, input().split())
+
+num_list = [i for i in range(1, N+1)]
+seq_list = []
+seq = num_list[:M]
+if N == M:
+  end = [i for i in range(N, 0, -1)]
+else:
+  end = num_list[N:N-M-1:-1]
+
+while True:
+  check_N = str("".join(str(_) for _ in seq)).find(str(N+1))  # M개의 숫자중 어떤 숫자든 N에 도달했을 때
+  if check_N != -1:
+    seq[check_N-1] += 1
+    seq[check_N] = 1
+
+  if len(set(seq)) == M and ("".join(str(_) for _ in seq)).find(str(N+1)) == -1:          # 중복된 숫자가 없이 길이가 M과 같을 때 출력       
+    seq_list.append(seq)
+    for i in seq:
+      print(i, end=' ')
+    print()
+
+  if seq == end:                  # 무한루프 탈출 조건 
+    break
   
+  seq[M-1]+=1
+  
+  
+
+# try4: 하나의 숫자가 선택 될 때마다 후보에서 그 숫자를 지우고 다음 숫자의 후보군을 작성한다.
+# whilea문을 활용하여 위 조건 실행
