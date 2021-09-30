@@ -117,10 +117,19 @@ False
 
 
 # try3: 중복이 발생할 경우, 바로 이전으로 돌리기 
+# DFS(깊이 우선 탐색)으로 한 거라고 생각함. '중복'을 피하도록만 설정한 것. O(N*N)
 # 중복 판단 기준: 대상리스트를 set으로 변화시킨 자료를 민들고 만들고, 둘의 len()을 비교했을 때 같지 않으면 중복 
+# 시간초과... ㅠㅜ
+'''
+import time
+
+def check_overN(seq, N):
+  index = str("".join(str(_) for _ in seq)).find(str(N+1))
+  return index
 
 N, M = map(int, input().split())
 
+start = time.time()
 num_list = [i for i in range(1, N+1)]
 seq_list = []
 seq = num_list[:M]
@@ -130,23 +139,54 @@ else:
   end = num_list[N:N-M-1:-1]
 
 while True:
-  check_N = str("".join(str(_) for _ in seq)).find(str(N+1))  # M개의 숫자중 어떤 숫자든 N에 도달했을 때
+  check_N = check_overN(seq, N)   # M개의 숫자중 어떤 숫자든 N에 도달했을 때
   if check_N != -1:
     seq[check_N-1] += 1
     seq[check_N] = 1
 
-  if len(set(seq)) == M and ("".join(str(_) for _ in seq)).find(str(N+1)) == -1:          # 중복된 숫자가 없이 길이가 M과 같을 때 출력       
-    seq_list.append(seq)
-    for i in seq:
-      print(i, end=' ')
-    print()
+  if len(set(seq)) == M and check_overN(seq, N) == -1:  # 중복된 숫자가 없이 길이가 M인 seq를 seq_list에 저장 
+    seq_list.append(''.join((str(_)+' ') for _ in seq)[:-1])
 
-  if seq == end:                  # 무한루프 탈출 조건 
+  if seq == end:                   # 무한루프 탈출 조건: 마지막 수열인 end와 같을 떄  
     break
   
-  seq[M-1]+=1
-  
-  
+  seq[M-1]+=1                      # seq[M-1]이 계속 움직이도록 설정
+print('time:', time.time()-start)  
+print(seq_list)
+
+# 결과 출력
+for seq in seq_list:
+  print(seq)
+'''
+
 
 # try4: 하나의 숫자가 선택 될 때마다 후보에서 그 숫자를 지우고 다음 숫자의 후보군을 작성한다.
 # whilea문을 활용하여 위 조건 실행
+'''
+N, M = map(int, input().split())
+
+N_list = [_ for _ in range(1,N+1)]
+N_set = set(N_list)   # 1. set(N_list)을 만든다. 
+seq_list= []
+seq = []
+key = 0
+
+while True:           # 2. seq를 하나씩 선택
+  seq = 
+  key += 1
+  if key == M-1:
+    break
+'''
+
+# 백트래킹이고 나발이고 그냥 풀어보자 
+
+from itertools import permutations
+import time
+
+N, M = map(int, input().split())
+start = time.time()
+N_list = [str(_) for _ in range(1, N+1)]
+seq_list = list(map(" ".join, permutations(N_list, M)))
+for seq in seq_list:
+  print(seq)
+print('time:', time.time()-start)
