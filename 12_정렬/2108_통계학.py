@@ -1,8 +1,6 @@
 # 정렬 - 통계학
 # 백준 - 2108번 
 
-import time
-
 # try1: 시간초과
 '''
 N = int(input())
@@ -44,7 +42,7 @@ print('time:', time.time()-start)
 '''
 
 # try2: 최빈값에 카운팅 정렬 대입
-
+'''
 import time
 
 N = int(input())
@@ -80,7 +78,7 @@ else:
 # 범위
 print(numbers[N-1] - numbers[0])
 print('time:', time.time()-start)
-
+'''
 
 
 # try3: try2에서 중간에 있는 numbers.sort()를 카운팅 정렬로 바꾸어보자
@@ -103,19 +101,19 @@ print(round(sum(numbers)/N))
 
 # 중앙값: 이 부분 for 문 없애기 
 count = 0
-for i in range(len(counting_sort)):
-    if counting_sort[i] != 0:
-        count += counting_sort[i]
-        if count >= (len(numbers)+1)/2:
-            median = i-4000
-            break
-print(median)
+check_median = N//2-1
+temp = sorted(set(numbers))
+for i in temp:
+    count += counting_sort[i+4000]
+    if count > check_median:
+        print(i)
+        break
 
 # 최빈값: counting_sort 활용하여 for문 없앰
 mode_check = counting_sort.count(max(counting_sort))        # mode_check: 최빈값의 갯수
 mode_index = counting_sort.index(max(counting_sort))        # mode_index: counting_sort의 인덱스 값-4000 = 해당 숫자 이용
-if mode_check == 1:                                         # 출력
-    print(mode_index-4000)
+if (mode_check == 1) or (mode_check != max(counting_sort[mode_index+1:])):                                        
+    print(mode_index-4000)      # 최빈값 출력
 else: 
     print(counting_sort[mode_index+1:].index(max(counting_sort)) + mode_index - 3999)   # 두번째로 작은 최빈값 찾기(슬라이싱 이용)
 

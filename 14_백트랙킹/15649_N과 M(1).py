@@ -178,15 +178,47 @@ while True:           # 2. seq를 하나씩 선택
     break
 '''
 
-# 백트래킹이고 나발이고 그냥 풀어보자 
-
+# 백트래킹이고 나발이고 내장함수 활용해서 그냥 풀어보자 
+'''
 from itertools import permutations
-import time
 
 N, M = map(int, input().split())
-start = time.time()
+
 N_list = [str(_) for _ in range(1, N+1)]
 seq_list = list(map(" ".join, permutations(N_list, M)))
 for seq in seq_list:
   print(seq)
-print('time:', time.time()-start)
+'''
+
+
+# 백트래킹을 활용해서 풀어보기
+# yotube 주니온TV 아무거나 연구소 - 파이썬으로 배우는 알고리즘 기초: 19. n-Queens 문제의 구현 참고
+
+def promising(i, seq):    # brunch가 유망한지  판단 
+  k = 1                   # i보다 작은 모든 k에 대해서 조사 
+  flag = True
+  while (k<i and flag):   # seq에서 중복된 수가 있는지 조사 (k: i아래 자리들 조사, i<k이면 실행을 아예 안함)
+    if seq[i]==seq[k]:    # 현재 seq[i] 값과 중복되는 값이 있는지 확인, 있을 경우 flag = False
+      flag = False
+    k += 1
+  return flag
+
+def nPm(i, seq):
+  if (promising(i, seq)):       # promising: brunch의 유망성 검사
+    if (i == M):                # 현재 i번째 숫자 == 길이M 이면, 자리가 전부 채워진 것
+      seq_list.append(seq[1:])  # seq_list에 결과 추가하기
+    else:                       
+      for j in range(1, N+1):   # i != M일때,
+        seq[i+1] = j            # seq에 다음 올 수들을 1~N 넣어주기
+        nPm(i+1, seq)           # "백트래킹"(중요): nPm 재귀
+
+N, M = map(int, input().split())
+seq_list = []
+seq = [0]*(M+1)
+nPm(0, seq)
+
+# 결과 출력
+for seq in seq_list:
+  for i in seq:
+    print(i, end=' ')
+  print()
