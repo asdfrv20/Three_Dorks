@@ -263,9 +263,8 @@ while True:
 
 
 # 제출 답안 
+'''
 import sys 
-
-
 
 N = int(sys.stdin.readline())
 
@@ -296,15 +295,14 @@ while True:
         count += 1
         
     front += 1
-
+'''
 
 
 # 본영이의 ㄹㅇ 간단 코드(깔끔 주의)
-'''
+
 N = int(input())
-num = 665
+num = 776
 while N:
     num += 1
-    if '666' in str(num) : N -= 1
+    if '777' in str(num) : N -= 1
 print(num)
-'''

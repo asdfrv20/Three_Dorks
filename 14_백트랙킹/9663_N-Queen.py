@@ -3,7 +3,7 @@
 
 # try1 : 
 # 결과 - 시간초과 
-'''
+
 import time
 
 def promising(i, col):
@@ -33,9 +33,9 @@ n_queen(0, col)
 print(len(cols))
 print(cols)
 print('time:', time.time()-start)
+
+
 '''
-
-
 import time
 
 def promising(i, col):
@@ -56,7 +56,7 @@ def n_queen(i, col):
                 col[i+1] = j
                 n_queen(i+1, col)
 N = int(input())
-
+4
 start = time.time()
 cols = []
 col = [1]*N
@@ -65,7 +65,7 @@ n_queen(0, col)
 print(len(cols))
 print(cols)
 print('time:', time.time()-start)
-
+'''
 
 
 # try2: 연산시간 줄여보기, board 시각화 자료를 포함시켜보자.

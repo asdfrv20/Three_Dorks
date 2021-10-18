@@ -1,3 +1,5 @@
+
+'''
 import math
 import sys
 import time
@@ -10,7 +12,7 @@ result = 1 + math.ceil((V-A)/(A-B))
 
 print(result)
 print("time: ",  time.time()-start)
-
+'''
 
 # 내가 짠 코드 
 import math
@@ -31,3 +33,6 @@ result = 1 + math.ceil((V-A)/(A-B))
 
 print(result)
 print("time: ", time.time()-start)
+
+
+#a,b,c=map(int,input().split());print(int((c-a)/(a-b)+.99)+1)

@@ -49,7 +49,7 @@ move_list = []
 hanoi(1,3,2, N)
 
 print(count)
-for i in range(len(move_list)):
-    print(move_list[i][0], move_list[i][1])
+for idx, i in enumerate(range(len(move_list))):
+    print(idx+1, ':', move_list[i][0], move_list[i][1])
 
 
