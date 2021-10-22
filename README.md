@@ -3,5 +3,10 @@
 
 ## Infomation
 * Members: 김세준, 배본영, 오수진 
-* Launguage: Python 
+* Launguage: Python, C, C++
 * Problem Site: [백준(BAEKJOON online judge)](https://www.acmicpc.net/)
+
+## Subject
+* 자료구조(Data structure) 
+* 알고리즘(Algorith)
+* 문제 풀이
